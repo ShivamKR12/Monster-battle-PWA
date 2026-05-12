@@ -21,7 +21,7 @@ async def main():
     class Game:
         def __init__(self):
             pygame.init()
-            self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+            self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SCALED | pygame.RESIZABLE)
             pygame.display.set_caption('Monster Battle')
             self.clock = pygame.time.Clock()
             self.running = True
