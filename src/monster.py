@@ -1,5 +1,6 @@
 from settings import * 
 from random import sample
+import pygame
 
 class Creature:
     def get_data(self, name):
@@ -19,7 +20,8 @@ class Creature:
 class Monster(pygame.sprite.Sprite, Creature):
     def __init__(self, name, surf):
         super().__init__()
-        self.image = surf 
+        w, h = surf.get_size()
+        self.image = pygame.transform.scale(surf, (w // 5, h // 5))
         self.rect = self.image.get_frect(bottomleft = (100, WINDOW_HEIGHT - 80))
         self.get_data(name)
     
@@ -29,6 +31,7 @@ class Monster(pygame.sprite.Sprite, Creature):
 class Opponent(pygame.sprite.Sprite, Creature):
     def __init__(self, name, surf, groups):
         super().__init__(groups)
-        self.image = surf
+        w, h = surf.get_size()
+        self.image = pygame.transform.scale(surf, (w // 5, h // 5))
         self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH - 250, 400))
         self.get_data(name)
