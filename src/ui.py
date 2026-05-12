@@ -1,8 +1,9 @@
 from settings import * 
 
 class UI:
-    def __init__(self, monster, player_monsters, simple_surfs, get_input):
-        self.display_surface = pygame.display.get_surface()
+    def __init__(self, monster, player_monsters, simple_surfs, get_input, display_surface, screen):
+        self.display_surface = display_surface
+        self.screen = screen
         self.font = pygame.font.Font(None, 30)
         self.left = WINDOW_WIDTH / 2 - 100 
         self.top = WINDOW_HEIGHT / 2 + 50
@@ -150,8 +151,8 @@ class UI:
 
         for event in pygame.event.get(pygame.FINGERDOWN, pump=False):
 
-            x = event.x * self.display_surface.get_width()
-            y = event.y * self.display_surface.get_height()
+            x = event.x * self.screen.get_width()
+            y = event.y * self.screen.get_height()
 
             self.handle_touch(
                 self.normalize_pos((x, y))
@@ -214,14 +215,20 @@ class UI:
 
     def normalize_pos(self, pos):
 
-        surface_width, surface_height = self.display_surface.get_size()
-
-        scale_x = WINDOW_WIDTH / surface_width
-        scale_y = WINDOW_HEIGHT / surface_height
-
+        # Get actual screen dimensions and calculate scale
+        screen_w, screen_h = self.screen.get_size()
+        scale = min(screen_w / WINDOW_WIDTH, screen_h / WINDOW_HEIGHT)
+        
+        # Calculate letterbox offsets
+        scaled_w = int(WINDOW_WIDTH * scale)
+        scaled_h = int(WINDOW_HEIGHT * scale)
+        offset_x = (screen_w - scaled_w) // 2
+        offset_y = (screen_h - scaled_h) // 2
+        
+        # Convert true screen coordinates back to virtual coordinates
         return (
-            pos[0] * scale_x,
-            pos[1] * scale_y
+            (pos[0] - offset_x) / scale,
+            (pos[1] - offset_y) / scale
         )
 
     def quad_select(self, index, options):
@@ -376,8 +383,8 @@ class UI:
             self.stats()
 
 class OpponentUI:
-    def __init__(self, monster):
-        self.display_surface = pygame.display.get_surface()
+    def __init__(self, monster, display_surface):
+        self.display_surface = display_surface
         self.monster = monster
         self.font = pygame.font.Font(None, 30)
 

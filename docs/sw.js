@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pygame-pwa-cache-1778599292';
+const CACHE_NAME = 'pygame-pwa-cache-1778600116';
 const PRECACHE_URLS = [
     './',
     './favicon.png',
