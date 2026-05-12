@@ -310,8 +310,15 @@ async def main():
             
             pygame.quit()
         
-            if sys.platform == "emscripten":
+            if sys.platform in ("emscripten", "wasi", "android"):
                 import platform
+                
+                # Disable the browser's "Are you sure you want to leave?" prompt
+                try:
+                    platform.window.eval("window.onbeforeunload = null;")
+                except Exception:
+                    pass
+                    
                 platform.window.close()
                 
             sys.exit()
