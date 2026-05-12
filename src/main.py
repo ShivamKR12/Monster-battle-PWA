@@ -310,9 +310,9 @@ async def main():
             
             pygame.quit()
         
-            if sys.platform in ("emscripten", "wasi", "android"):
-                import platform
-                platform.window.close()
+            # if sys.platform in ("emscripten", "wasi", "android"):
+            #     import platform
+            #     platform.window.close()
                 
             sys.exit()
     
