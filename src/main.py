@@ -183,27 +183,27 @@ async def main():
                     blur_surf.blit(tint_surf, (0, 0))
                     self.display_surface.blit(blur_surf, (0, 0))
 
-                    font = pygame.font.Font(None, 100 // 5)
+                    font = pygame.font.Font(None, 100 // 3)
                     text = 'VICTORY' if self.state == 'victory' else 'GAME OVER'
                     color = COLORS['green'] if self.state == 'victory' else COLORS['red']
                     text_surf = font.render(text, True, color)
-                    text_rect = text_surf.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - (50 // 5)))
+                    text_rect = text_surf.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 50))
                     self.display_surface.blit(text_surf, text_rect)
 
-                    button_font = pygame.font.Font(None, 50 // 5)
+                    button_font = pygame.font.Font(None, 50 // 3)
 
                     restart_rect = pygame.FRect(
-                        WINDOW_WIDTH / 2 - (220 // 5),
-                        WINDOW_HEIGHT / 2 + (20 // 5),
-                        180 // 5,
-                        70 // 5
+                        WINDOW_WIDTH / 2 - 220,
+                        WINDOW_HEIGHT / 2 + 20,
+                        180 // 3,
+                        70 // 3
                     )
 
                     quit_rect = pygame.FRect(
-                        WINDOW_WIDTH / 2 + (40 // 5),
-                        WINDOW_HEIGHT / 2 + (20 // 5),
-                        180 // 5,
-                        70 // 5
+                        WINDOW_WIDTH / 2 + 40,
+                        WINDOW_HEIGHT / 2 + 20,
+                        180 // 3,
+                        70 // 3
                     )
 
                     self.end_button_rects = {
