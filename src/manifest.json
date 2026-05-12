@@ -1,0 +1,17 @@
+{
+  "name": "Monster Battle",
+  "short_name": "Monster Battle",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
