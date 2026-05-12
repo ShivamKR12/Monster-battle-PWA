@@ -24,6 +24,7 @@ def make_offline_pwa():
         "--package", "com.shivam.monsterbattle",
         "--icon", "favicon.png",
         "--can_close", "1",
+        "--ume_block", "0",
         "--build", 
         "main.py"
     ]

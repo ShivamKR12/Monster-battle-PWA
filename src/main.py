@@ -20,12 +20,12 @@ from pygame.locals import *
 async def main():
     class Game:
         def __init__(self):
+            pygame.mixer.pre_init(44100, -16, 2, 1024)
             pygame.init()
+            pygame.mixer.set_num_channels(64)
             
-            # True hardware screen, let the browser define the size
-            self.screen = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
-            # Virtual resolution surface (Everything draws to this first!)
-            self.display_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+            # Pygbag automatically scales a fixed resolution to any browser window via CSS!
+            self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
             pygame.display.set_caption('Monster Battle')
             self.clock = pygame.time.Clock()
             self.running = True
@@ -50,7 +50,7 @@ async def main():
             self.opponent = Opponent(opponent_name, self.front_surfs[opponent_name], self.all_sprites)
 
             # ui 
-            self.ui = UI(self.monster, self.player_monsters, self.simple_surfs, self.get_input, self.display_surface, self.screen)
+            self.ui = UI(self.monster, self.player_monsters, self.simple_surfs, self.get_input, self.display_surface)
             self.opponent_ui = OpponentUI(self.opponent, self.display_surface)
 
             # timers
@@ -58,23 +58,6 @@ async def main():
 
             self.end_button_rects = {}
         
-        def normalize_pos(self, pos):
-            # Get actual screen dimensions and calculate scale
-            screen_w, screen_h = self.screen.get_size()
-            scale = min(screen_w / WINDOW_WIDTH, screen_h / WINDOW_HEIGHT)
-            
-            # Calculate letterbox offsets
-            scaled_w = int(WINDOW_WIDTH * scale)
-            scaled_h = int(WINDOW_HEIGHT * scale)
-            offset_x = (screen_w - scaled_w) // 2
-            offset_y = (screen_h - scaled_h) // 2
-            
-            # Convert true screen coordinates back to virtual coordinates
-            return (
-                (pos[0] - offset_x) / scale,
-                (pos[1] - offset_y) / scale
-            )
-
         def reset_game(self):
             self.player_active = True
             self.state = 'battle'
@@ -92,7 +75,7 @@ async def main():
             self.opponent = Opponent(opponent_name, self.front_surfs[opponent_name], self.all_sprites)
 
             # ui 
-            self.ui = UI(self.monster, self.player_monsters, self.simple_surfs, self.get_input, self.display_surface, self.screen)
+            self.ui = UI(self.monster, self.player_monsters, self.simple_surfs, self.get_input, self.display_surface)
             self.opponent_ui = OpponentUI(self.opponent, self.display_surface)
 
             # timers
@@ -294,7 +277,7 @@ async def main():
 
                         if event.button == 1:
 
-                            mouse_pos = self.normalize_pos(event.pos)
+                            mouse_pos = event.pos
 
                             if self.end_button_rects['restart'].collidepoint(mouse_pos):
                                 self.reset_game()
@@ -304,24 +287,14 @@ async def main():
 
                     for event in pygame.event.get(pygame.FINGERDOWN, pump=False):
 
-                        x = event.x * self.screen.get_width()
-                        y = event.y * self.screen.get_height()
+                        x = event.x * WINDOW_WIDTH
+                        y = event.y * WINDOW_HEIGHT
 
-                        if self.end_button_rects['restart'].collidepoint(self.normalize_pos((x, y))):
+                        if self.end_button_rects['restart'].collidepoint((x, y)):
                             self.reset_game()
 
-                        elif self.end_button_rects['quit'].collidepoint(self.normalize_pos((x, y))):
+                        elif self.end_button_rects['quit'].collidepoint((x, y)):
                             self.running = False
-
-                # Render Virtual Surface to True Screen
-                screen_w, screen_h = self.screen.get_size()
-                scale = min(screen_w / WINDOW_WIDTH, screen_h / WINDOW_HEIGHT)
-                scaled_w, scaled_h = int(WINDOW_WIDTH * scale), int(WINDOW_HEIGHT * scale)
-                
-                self.screen.fill(COLORS['black']) # Fill borders with black
-                scaled_surf = pygame.transform.scale(self.display_surface, (scaled_w, scaled_h))
-                scaled_rect = scaled_surf.get_rect(center=(screen_w // 2, screen_h // 2))
-                self.screen.blit(scaled_surf, scaled_rect)
 
                 pygame.display.update()
 
