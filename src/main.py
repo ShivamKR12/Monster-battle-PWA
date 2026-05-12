@@ -309,6 +309,11 @@ async def main():
                 await asyncio.sleep(0) # allow other tasks to run
             
             pygame.quit()
+        
+            if sys.platform == "emscripten":
+                import platform
+                platform.window.close()
+                
             sys.exit()
     
 
