@@ -16,7 +16,20 @@ def make_offline_pwa():
 
     # 1. Build the game using pygbag (generates the build/web directory)
     print("Building pygbag project...")
-    subprocess.run([sys.executable, "-m", "pygbag", "--build", "--ume_block", "0", "main.py"], cwd="src", check=True)
+    
+    pygbag_cmd = [
+        sys.executable, "-m", "pygbag", 
+        "--app_name", "Monster Battle",
+        "--title", "Monster Battle",
+        "--package", "com.shivam.monsterbattle",
+        "--icon", "favicon.png",
+        "--can_close", "1",
+        "--ume_block", "0",
+        "--build", 
+        "main.py"
+    ]
+    
+    subprocess.run(pygbag_cmd, cwd="src", check=True)
     
     web_dir = os.path.join("src", "build", "web")
     
