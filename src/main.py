@@ -154,7 +154,7 @@ async def main():
 
         async def run(self):
             while self.running:
-                dt = self.clock.tick(60) / 1000
+                dt = self.clock.tick() / 1000
                 pygame.event.pump()
                 for event in pygame.event.get(pygame.QUIT, pump=False):
                     self.running = False
