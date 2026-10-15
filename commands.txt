@@ -1,0 +1,13 @@
+Get-ChildItem -Path . -Recurse -File | Where-Object { $_.Extension -in '.py', '.spec', '.yml', '.md' -and $_.FullName -notmatch '\\(venv|build|dist)\\' } | ForEach-Object { "=== $($_.Name) ==="; Get-Content $_.FullName; "" } | Set-Content temp.txt
+
+Get-ChildItem -Path . -Recurse -File |
+Where-Object {
+    $_.Extension -in '.py', '.spec', '.yml', '.md', '.html', '.js', '.json' -and
+    $_.FullName -notmatch '\\(venv|build|dist|docs)\\'
+} |
+ForEach-Object {
+    "`n=== $($_.FullName) ===`n"
+    Get-Content $_.FullName
+    ""
+} |
+Set-Content temp.txt
