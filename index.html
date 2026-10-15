@@ -1,14 +1,14 @@
 <html lang="en-us"><script src="https://pygame-web.github.io/cdn/0.9.3/pythons.js" type=module id="site" data-python="python3.12" data-LINES=42 data-COLUMNS=132 data-os="vtx,snd,gui" async defer>#<!--
 
 print("""
-Loading src from src.apk
+Loading monster-battle-pwa from monster-battle-pwa.apk
     Pygbag Version : 0.9.3
     Template Version : 0.9.3
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/cdn/0.9.3/
     Screen  : 1280x720
-    Title   : src
-    Folder  : src
+    Title   : monster-battle-pwa
+    Folder  : monster-battle-pwa
     Authors : pgw
     SPDX-License-Identifier: cookiecutter.spdx
 
@@ -29,22 +29,22 @@ async def custom_site():
     platform.window.canvas.style.visibility = "visible"
 
 
-    bundle = "src"
+    bundle = "monster-battle-pwa"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/src
+    appdir = Path(f"/data/data/{bundle}") # /data/data/monster-battle-pwa
     appdir.mkdir()
 
 
     # unpack filesystem from compressed archive into work dir
     if platform.window.location.host.find('.itch.zone')>0:
         import zipfile
-        async with platform.fopen("src.apk", "rb") as archive:
+        async with platform.fopen("monster-battle-pwa.apk", "rb") as archive:
             with zipfile.ZipFile(archive) as zip_ref:
                 zip_ref.extractall(appdir.as_posix())
     else:
         import tarfile
-        async with platform.fopen("src.tar.gz", "rb") as archive:
+        async with platform.fopen("monster-battle-pwa.tar.gz", "rb") as archive:
             tar = tarfile.open(fileobj=archive, mode="r:gz")
             tar.extractall(path=appdir.as_posix(), filter='tar')
             tar.close()
@@ -151,7 +151,7 @@ config = {
     gui_divider : 2,
     ume_block : 0,
     can_close : 0,
-    archive : "src",
+    archive : "monster-battle-pwa",
     gui_debug : 2,
     cdn : "https://pygame-web.github.io/cdn/0.9.3/",
     autorun : 0,
@@ -178,7 +178,7 @@ function show_infobox() {
 
 </script>
 
-    <title>src</title>
+    <title>monster-battle-pwa</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
